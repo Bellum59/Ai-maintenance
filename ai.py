@@ -6,8 +6,9 @@ import supervision as sv
 import cv2
 
 # define the image url to use for inference
-image_file = "Ferrari.jpeg"
+image_file = "Ferrari.jpg"
 image = cv2.imread(image_file)
+
 
 # load a pre-trained yolov8n model
 model = get_model(model_id="f1-car-2023/5")
@@ -30,3 +31,4 @@ annotated_image = label_annotator.annotate(
 
 # display the image
 sv.plot_image(annotated_image)
+cv2.imwrite("Ferrari.jpg", annotated_image) 

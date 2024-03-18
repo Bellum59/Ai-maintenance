@@ -1,35 +1,17 @@
 <!DOCTYPE html>
 <html>
-<body>
-
-
-
-</body>
-<script>
-    const axios = require("axios");
-    const fs = require("fs");
-
-    const image = fs.readFileSync("Ferrari.jpg", {
-        encoding: "base64"
-    });
-
-    axios({
-        method: "POST",
-        url: "https://detect.roboflow.com/f1-car-2023/5",
-        params: {
-            api_key: "WwQQ9F0aLwWflg7WGHrk"
-        },
-        data: image,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
-    })
-    .then(function(response) {
-        console.log(response.data);
-    })
-    .catch(function(error) {
-        console.log(error.message);
-    });
-
-</script>
+    <body>
+        <div>
+            <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)">
+            <img id="output" width="200" />
+        </div>
+        
+        <script>
+            var loadFile = function(event) {
+                var image = document.getElementById('output');
+                image.src = URL.createObjectURL(event.target.files[0]);
+                console.log(event.target.files[0]);
+            };
+        </script>
+    </body>
 </html> 

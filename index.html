@@ -2,8 +2,11 @@
 <html>
     <body>
         <div>
-            <input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)">
-            <img id="output" width="200" />
+        <form id="postImage" method="POST" enctype="multipart/form-data">
+            <input type="file" accept="image/*" name="imageUpload" id="imageUpload" onchange="loadFile(event)">
+            <img id="output"/> <br>
+            <input type="submit" id="envoieImage" value="Envoyer">
+        </form>
         </div>
         
         <script>
@@ -12,6 +15,31 @@
                 image.src = URL.createObjectURL(event.target.files[0]);
                 console.log(event.target.files[0]);
             };
+            const form = document.querySelector('form');
+            form.addEventListener('submit', handleSubmit);
+           async function handleSubmit(event){
+                event.preventDefault();
+                const form = event.currentTarget;
+                const url = "https://htmaze.devbel.xyz:5000/AI"; //Nom de domaine choisis car rien dautre ne tourner dessus
+                console.log(form);
+                const formData = new FormData(document.getElementById('postImage'));
+                console.log(formData);
+
+                /** @type {Parameters<fetch>[1]} */
+                const fetchOptions = {
+                    method: form.method,
+                    body: formData
+                };
+
+                fetch(url, fetchOptions).then(response => response.json())
+                .then(titre =>{
+                    console.log(titre)
+                    var image = document.getElementById('output');
+                    image.src = `http://mobile.devbel.xyz/AI/${titre}`
+                });
+
+            };
+
         </script>
     </body>
 </html> 
